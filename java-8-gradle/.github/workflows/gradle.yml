@@ -36,9 +36,3 @@ jobs:
 
       - name: run gradle build
         run: ./gradlew build
-
-      - name: upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: '${{ env.ARTIFACT_NAME }}'
-          path: build/libs/*.jar
