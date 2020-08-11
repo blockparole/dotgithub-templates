@@ -46,7 +46,7 @@ jobs:
       - name: run gradle build
         run: ./gradlew build
 
-      - name: upload release asset
+      - name: upload release assets
         uses: csexton/release-asset-action@v2
         with:
           pattern: "build/libs/*.jar"
