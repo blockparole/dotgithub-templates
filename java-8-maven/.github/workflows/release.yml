@@ -43,7 +43,7 @@ jobs:
       - name: run maven package
         run: mvn -B package --file pom.xml
 
-      - name: upload release asset
+      - name: upload release assets
         uses: csexton/release-asset-action@v2
         with:
           pattern: "target/*.jar"
