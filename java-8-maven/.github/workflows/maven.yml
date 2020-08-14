@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: set up environment
-        run: echo ::set-env name=ARTIFACT_NAME::"$GITHUB_SHA"
-
       - name: checkout changes
         uses: actions/checkout@v2
 
