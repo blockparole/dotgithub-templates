@@ -13,8 +13,8 @@ jobs:
       - name: checkout changes
         uses: actions/checkout@v2
 
-      - name: get timestamp
-        run: echo ::set-env name=EPOCH::"$(date +%s)"
+      - name: get commit info
+        run: echo ::set-env name=SHA::"$GITHUB_SHA"
 
       - name: prepare release
         id: create_release
@@ -22,9 +22,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.EPOCH }}
-          release_name: ${{ env.EPOCH }}
-          body: automated release at epoch ${{ env.EPOCH }}
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: automated release at commit ${{ env.SHA }}
           draft: false
           prerelease: false
 
@@ -36,16 +36,19 @@ jobs:
       - name: prepare depdendency cache
         uses: actions/cache@v2
         with:
-          path: ~/.m2
-          key: '${{ runner.os }}-m2-${{ hashFiles(''**/pom.xml'') }}'
-          restore-keys: '${{ runner.os }}-m2'
+          path: ~/.gradle/caches
+          key: '${{ runner.os }}-gradle-${{ hashFiles(''**/*.gradle'') }}'
+          restore-keys: '${{ runner.os }}-gradle'
 
-      - name: run maven package
-        run: mvn -B package --file pom.xml
+      - name: prepare gradlew fileperms
+        run: chmod +x gradlew
+
+      - name: run gradle build
+        run: ./gradlew build
 
       - name: upload release assets
         uses: csexton/release-asset-action@v2
         with:
-          pattern: "target/*.jar"
+          pattern: "build/libs/*.jar"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-url: ${{ steps.create_release.outputs.upload_url }}
