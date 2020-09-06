@@ -1,15 +1,16 @@
 version: 2
 updates:
-  - package-ecosystem: "cargo"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "12:00"
-      timezone: "Europe/Berlin"
-    assignees:
-      - "blockparole"
-    reviewers:
-      - "blockparole"
-    commit-message:
-      prefix: "cargo"
-      include: "scope"
+
+- package-ecosystem: "cargo"
+  directory: "/"
+  schedule:
+    interval: "daily"
+    time: "12:00"
+    timezone: "Europe/Berlin"
+  assignees:
+    - "blockparole"
+  reviewers:
+    - "blockparole"
+  commit-message:
+    prefix: "cargo"
+    include: "scope"
